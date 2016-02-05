@@ -12,6 +12,7 @@ class mycogfig(Config):
     def __init__(self):
         Config.__init__(self)
         self.UserAgentString = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+    
 
     def GetSeeds(self):
         '''Returns the first set of urls to start crawling from'''

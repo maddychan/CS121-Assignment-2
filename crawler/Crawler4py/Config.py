@@ -34,7 +34,7 @@ class Config:
         self.MaxRetryDownloadOnFail = 5
 
         #PolitenessDelay that the crawler is forced to adhere to. http://en.wikipedia.org/wiki/Web_crawler#Politeness_policy
-        self.PolitenessDelay = 600
+        self.PolitenessDelay = 1200
 
         #The Persistent File to store current state of crawler for resuming (if Resumable is True and PersistenceObject is None)
         self.PersistentFile = "Persistent.shelve"
