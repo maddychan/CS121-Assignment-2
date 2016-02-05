@@ -21,7 +21,12 @@ class mycogfig(Config):
         '''Function to handle url data. Guaranteed to be Thread safe.
         parsedData = {"url" : "url", "text" : "text data from html", "html" : "raw html data"}
         Advisable to make this function light. Data can be massaged later. Storing data probably is more important'''
+        '''print(parsedData["text"])'''
         print(parsedData["url"])
+        #write url to a txt file
+        file = open("Crawldata.txt","a")
+        file.write(parsedData["url"])
+        file.close()
         return
 
     def ValidUrl(self, url):
