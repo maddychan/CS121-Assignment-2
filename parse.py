@@ -3,9 +3,10 @@ from collections import defaultdict
 
 
 #open the data.txt file - there needs to be a data.txt file in the same file folder as this module
-file = open("data.txt")
+file = open("data-1.txt", 'rt', encoding='utf-8')
 
 #variables to keep track of
+count = 0
 maxWords = 0                #to keep track of the highest number of words on a page 
 maxURL = ""                 #to keep track of the url with the most words
 urls = set()                #to keep track of unique urls
@@ -25,13 +26,18 @@ stopWords = {"a","about","above","after","again","against","all","am","an","and"
              "very","was","wasn't","we","we'd","we'll","we're","we've","were","weren't","what","what's","when","when's",
              "where","where's","which","while","who","who's","whom","why","why's","with","won't","would","wouldn't",
              "you","you'd","you'll","you're","you've","your","yours","yourself","yourselves","|","&","-","~","+","=",
-             "*","<",">",".",";",'1','2','3','4','5','6','7','8','9','b','@',':'}
+             "*","<",">",".",";",'0','1','2','3','4','5','6','7','8','9','b','@',':'}
 
 #going through the file, looking to see if it's a url or data on a page.
 #urls, urlDict, maxURL, and wordDict are updated accordingly
 for i in file:
     line = i.strip()
+##    count += 1
+##    if count == 200:
+##        break
+##    print(line)
     if len(line) > 7 and line[0:7] == "http://":
+        #print("hello")
         sub = line[7:].split(".")
         urlDict[sub[0]].add(line)
         urls.add(line)
@@ -48,27 +54,31 @@ for i in file:
 
 #printing out number of URLS and the page with the max amount of words
 print("Number of urls:",len(urls))
-print("max words",maxWords,maxURL)
+print("max words:",maxWords,"at:",maxURL)
+
+
 
 
 #writing Subdomain.txt
 subdomain = open("Subdomain.txt",'w')
-for a in sorted(urlDict.items(),key = lambda x:x[1],reverse = True):
-    subdomain.write(a[0]+", "+str(len(a[0]))+"\n")
+for a in sorted(urlDict.items(),key = lambda x:len(x[1]),reverse = True):
+    subdomain.write(a[0]+", "+str(len(a[1]))+"\n")
 subdomain.close()
 
 #writing CommonWords.txt
 words = open("CommonWords.txt",'w')
 count = 0
 for a in sorted(wordDict.items(),key = lambda x:x[1],reverse = True):
-    if a[0] not in stopWords and a[0][0] !="\\":
-        words.write(a[0]+", "+str(a[1])+"\n")
-        count +=1
-        if count == 501:
-            break
+    try:
+        if a[0] not in stopWords and a[0][0] !="\\":
+            words.write(a[0]+", "+str(a[1])+"\n")
+            count +=1
+            if count == 501:
+                break
+    except:
+        continue
+        
 words.close()
-    
-      
 
 
 
